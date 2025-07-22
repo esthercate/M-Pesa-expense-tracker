@@ -75,11 +75,11 @@ const Hero = (props: Props) => {
 			{error && <p className="text-red-600 mt-2">{error}</p>}
 
 			{pdfFile && (
-				<div className="mt-6 flex flex-col md:flex-row gap-4 justify-center font-semibold">
-					<button className="text-sm md:text-lg bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+				<div className="mt-4 md:mt-10 flex flex-col md:flex-row gap-4 justify-center font-semibold">
+					<button className="text-sm md:text-base bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer">
 						Analyze Expense
 					</button>
-					<button className="bg-white px-4 py-2 rounded transition border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white cursor-pointer text-sm md:text-lg">
+					<button className="bg-white px-4 py-2 rounded transition border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white cursor-pointer text-sm md:text-base">
 						Convert to Excel
 					</button>
 				</div>

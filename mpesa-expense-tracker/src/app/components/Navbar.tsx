@@ -1,5 +1,5 @@
 'use client';
-import { GiReceiveMoney } from 'react-icons/gi';
+import { GiExpense } from 'react-icons/gi';
 import { HiMenu, HiX } from 'react-icons/hi';
 import React, { useState } from 'react';
 import Privacy from './Privacy'; // Modal component
@@ -14,16 +14,16 @@ const Navbar = (props: Props) => {
 
 	return (
 		<>
-			<nav className="w-full px-4 py-3 shadow-md bg-white">
+			<nav className="w-full px-4 md:px-10 py-4 shadow-md bg-white">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2 font-bold text-gray-800">
-						<GiReceiveMoney className="text-lg md:text-2xl" />
+						<GiExpense size={30} />
 						M-pesa Expense Tracker
 					</div>
 
 					{/* Hamburger Button */}
 					<button
-						className="sm:hidden text-2xl text-gray-700"
+						className="sm:hidden text-2xl text-blue-600"
 						onClick={toggleMobileMenu}
 					>
 						{mobileMenuOpen ? <HiX /> : <HiMenu />}
