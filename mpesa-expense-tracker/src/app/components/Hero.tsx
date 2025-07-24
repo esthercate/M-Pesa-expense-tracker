@@ -1,12 +1,20 @@
-"use client"
+'use client';
+
 import React, { useState, useRef } from 'react';
+import { useExtractText } from '@/hooks/useExtractText';
+import { SummaryEntry, TransactionEntry } from '@/types/mpesa';
+import { exportMpesaToExcel } from '@/utils/exportToExcel';
 
 type Props = {};
 
 const Hero = (props: Props) => {
 	const [pdfFile, setPdfFile] = useState<File | null>(null);
 	const [error, setError] = useState('');
+	const [summary, setSummary] = useState<SummaryEntry[]>([]);
+	const [transactions, setTransactions] = useState<TransactionEntry[]>([]);
 	const fileInputRef = useRef<HTMLInputElement>(null);
+
+	const { extractTextFromPDF } = useExtractText();
 
 	const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
@@ -14,19 +22,44 @@ const Hero = (props: Props) => {
 		handleFile(file);
 	};
 
-	const handleFile = (file: File) => {
+	const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (file) handleFile(file);
+	};
+
+	const handleFile = async (file: File) => {
 		if (file && file.type === 'application/pdf') {
 			setPdfFile(file);
 			setError('');
+
+			try {
+				const text: string = await extractTextFromPDF(file);
+				console.log('[Extracted Text]', text);
+
+				const { parseMpesaStatementText } = await import('@/utils/mpesaParser');
+				const result = parseMpesaStatementText(text);
+
+				setSummary(result.summary);
+				setTransactions(result.transactions);
+
+				console.log('[Parsed Summary]', result.summary);
+				console.log('[Parsed Transactions]', result.transactions);
+			} catch (err) {
+				console.error('Error parsing PDF:', err);
+				setError('Failed to parse PDF file.');
+			}
 		} else {
 			setPdfFile(null);
 			setError('Only PDF files are allowed.');
 		}
 	};
 
-	const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0];
-		if (file) handleFile(file);
+	const handleDownloadExcel = () => {
+		if (summary.length && transactions.length) {
+			exportMpesaToExcel(summary, transactions);
+		} else {
+			alert('No data to export yet.');
+		}
 	};
 
 	return (
@@ -79,7 +112,10 @@ const Hero = (props: Props) => {
 					<button className="text-sm md:text-base bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer">
 						Analyze Expense
 					</button>
-					<button className="bg-white px-4 py-2 rounded transition border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white cursor-pointer text-sm md:text-base">
+					<button
+						className="bg-white px-4 py-2 rounded transition border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white cursor-pointer text-sm md:text-base"
+						onClick={handleDownloadExcel}
+					>
 						Convert to Excel
 					</button>
 				</div>
