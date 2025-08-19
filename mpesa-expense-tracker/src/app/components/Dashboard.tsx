@@ -6,6 +6,8 @@ import {
 	FiActivity,
 } from 'react-icons/fi';
 import Card from './common/Card';
+import IncomeExpenseChart from './common/IncomeExpenseChart';
+import ExpenseBreakdownChart from './common/ExpenseBreakdownChart';
 
 const Dashboard: React.FC = () => {
 	const metricsData = [
@@ -43,6 +45,11 @@ const Dashboard: React.FC = () => {
 						icon={metric.icon}
 					/>
 				))}
+			</div>
+			{/* Charts */}
+			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+				<IncomeExpenseChart />
+				<ExpenseBreakdownChart />
 			</div>
 		</div>
 	);
