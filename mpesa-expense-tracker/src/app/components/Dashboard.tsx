@@ -5,10 +5,9 @@ import {
 	FiTrendingUp,
 	FiActivity,
 } from 'react-icons/fi';
-import Card from './common/Card'; // Import the Card component
+import Card from './common/Card';
 
 const Dashboard: React.FC = () => {
-	// Core 4 metrics with icons
 	const metricsData = [
 		{
 			title: 'Balance',
@@ -41,7 +40,7 @@ const Dashboard: React.FC = () => {
 						key={index}
 						title={metric.title}
 						value={metric.value}
-						icon={metric.icon} // Pass the icon to the Card
+						icon={metric.icon}
 					/>
 				))}
 			</div>
