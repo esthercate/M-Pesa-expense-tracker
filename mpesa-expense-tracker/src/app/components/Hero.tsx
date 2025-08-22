@@ -64,14 +64,14 @@ const Hero = () => {
 			/>
 			{pdfFile && (
 				<div className="mt-4 md:mt-10 flex flex-col md:flex-row gap-4 justify-center font-semibold">
-					<button className="text-sm md:text-base bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer">
-						Analyze Expense
-					</button>
 					<button
 						className="bg-white px-4 py-2 rounded transition border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white cursor-pointer text-sm md:text-base"
 						onClick={handleDownloadExcel}
 					>
 						Convert to Excel
+					</button>
+					<button className="text-sm md:text-base bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer">
+						Analyze Expense
 					</button>
 				</div>
 			)}
