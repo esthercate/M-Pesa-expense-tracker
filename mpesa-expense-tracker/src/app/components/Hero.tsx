@@ -70,9 +70,9 @@ const Hero = () => {
 					>
 						Convert to Excel
 					</button>
-					<button className="text-sm md:text-base bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer">
-						Analyze Expense
-					</button>
+					{/* <button className="text-sm md:text-base bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer">
+						Analyze Expenses
+					</button> */}
 				</div>
 			)}
 		</div>
