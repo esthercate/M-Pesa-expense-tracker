@@ -30,7 +30,7 @@ const Footer = (props: Props) => {
 						href="/register"
 						className="cursor-pointer text-blue-600 transition"
 					>
-						Register
+						Signup
 					</a>
 				</div>
 			</footer>
