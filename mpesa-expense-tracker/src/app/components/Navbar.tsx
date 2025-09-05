@@ -32,10 +32,16 @@ const Navbar = (props: Props) => {
 					{/* Desktop Nav Links */}
 					<div className="hidden sm:flex items-center gap-4">
 						<a
+							href="/"
+							className="text-gray-700 hover:text-blue-600 transition"
+						>
+							Upload PDF
+						</a>
+						<a
 							href="#demo"
 							className="text-gray-700 hover:text-blue-600 transition"
 						>
-							Demo
+							How it works
 						</a>
 						<a
 							href="#pricing"
@@ -59,10 +65,16 @@ const Navbar = (props: Props) => {
 				{mobileMenuOpen && (
 					<div className="flex flex-col gap-2 mt-3 sm:hidden">
 						<a
+							href="/"
+							className="text-gray-700 hover:text-blue-600 transition"
+						>
+							Upload PDF
+						</a>
+						<a
 							href="#demo"
 							className="text-gray-700 hover:text-blue-600 transition"
 						>
-							Demo
+							How it works
 						</a>
 						<a
 							href="#pricing"
