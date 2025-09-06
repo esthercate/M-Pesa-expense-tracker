@@ -8,7 +8,7 @@ import {
 } from 'react-icons/fi';
 import Avatars from './Avatars';
 
-type Props = {};
+type CtaProps = {};
 
 const features = [
 	{
@@ -35,9 +35,12 @@ const features = [
 	},
 ];
 
-const Cta = (props: Props) => {
+const Cta = (props: CtaProps) => {
 	return (
-		<div className="w-full bg-blue-50 py-16 px-4">
+		<div
+			className="w-full bg-blue-50 py-16 px-4"
+			id="cta"
+		>
 			<div className="max-w-4xl mx-auto text-center">
 				<h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">
 					Coming Soon
