@@ -3,6 +3,7 @@ import { GiExpense } from 'react-icons/gi';
 import { HiMenu, HiX } from 'react-icons/hi';
 import React, { useState } from 'react';
 import Privacy from './Privacy'; // Modal component
+import Link from 'next/link';
 
 type Props = {};
 
@@ -16,10 +17,13 @@ const Navbar = (props: Props) => {
 		<>
 			<nav className="w-full px-4 md:px-10 py-4 shadow-md bg-white">
 				<div className="flex items-center justify-between">
-					<div className="flex items-center gap-2 font-bold text-gray-800">
+					<Link
+						href="/"
+						className="flex items-center gap-2 font-bold text-gray-800 hover:text-blue-600 transition"
+					>
 						<GiExpense size={30} />
 						M-pesa Expense Tracker
-					</div>
+					</Link>
 
 					{/* Hamburger Button */}
 					<button
@@ -55,9 +59,12 @@ const Navbar = (props: Props) => {
 						>
 							Privacy
 						</button>
-						<button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-							Try for free
-						</button>
+						<Link
+							href="/#cta"
+							className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+						>
+							Join Waitlist
+						</Link>
 					</div>
 				</div>
 
@@ -91,9 +98,12 @@ const Navbar = (props: Props) => {
 						>
 							Privacy
 						</button>
-						<button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-							Try for free
-						</button>
+						<Link
+							href="/#cta"
+							className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+						>
+							Join Waitlist
+						</Link>
 					</div>
 				)}
 			</nav>
