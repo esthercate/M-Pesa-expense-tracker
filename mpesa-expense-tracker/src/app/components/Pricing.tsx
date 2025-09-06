@@ -6,11 +6,11 @@ type Props = {};
 const features = [
 	{ text: 'Convert M-Pesa PDF Statement to Excel', included: true },
 	{ text: 'Download Excel Statement', included: true },
-	{ text: 'Analyze Expenses (no download)', included: true },
 	{
 		text: 'Your data is processed in your browser and never leaves your device',
 		included: true,
 	},
+	{ text: 'Analyze Expenses (Coming Soon)', included: false },
 	{ text: 'No data persistence', included: false },
 	{ text: 'No expense history or comparisons', included: false },
 ];
