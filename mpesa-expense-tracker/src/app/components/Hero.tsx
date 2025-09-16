@@ -4,6 +4,7 @@ import { useExtractText } from '@/hooks/useExtractText';
 import { SummaryEntry, TransactionEntry } from '@/types/mpesa';
 import { exportMpesaToExcel } from '@/utils/exportToExcel';
 import FileUpload from './FileUpload';
+import { toast } from 'react-toastify';
 
 const Hero = () => {
 	const [pdfFile, setPdfFile] = useState<File | null>(null);
@@ -38,7 +39,7 @@ const Hero = () => {
 		if (summary.length && transactions.length) {
 			exportMpesaToExcel(summary, transactions);
 		} else {
-			alert('No data to export yet.');
+			toast.error('Please upload PDF to continue.');
 		}
 	};
 
@@ -62,19 +63,25 @@ const Hero = () => {
 				error={error}
 				pdfFile={pdfFile}
 			/>
-			{pdfFile && (
-				<div className="mt-4 md:mt-10 flex flex-col md:flex-row gap-4 justify-center font-semibold">
-					<button
-						className="bg-white px-4 py-2 rounded transition border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white cursor-pointer text-sm md:text-base"
-						onClick={handleDownloadExcel}
-					>
-						Convert to Excel
-					</button>
-					{/* <button className="text-sm md:text-base bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer">
-						Analyze Expenses
-					</button> */}
-				</div>
-			)}
+			<div className="mt-4 md:mt-10 flex flex-col md:flex-row gap-4 justify-center font-semibold">
+				<button
+					className="text-sm md:text-base bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer"
+					onClick={handleDownloadExcel}
+				>
+					Convert to Excel
+				</button>
+				<button
+					onClick={() => {
+						const ctaSection = document.getElementById('cta');
+						if (ctaSection) {
+							ctaSection.scrollIntoView({ behavior: 'smooth' });
+						}
+					}}
+					className="text-sm md:text-base bg-gray-400 text-white px-4 py-2 rounded opacity-70 cursor-pointer hover:opacity-90"
+				>
+					Analyze Expenses (Coming Soon)
+				</button>
+			</div>
 		</div>
 	);
 };
