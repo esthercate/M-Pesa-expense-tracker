@@ -63,9 +63,9 @@ const Hero = () => {
 				error={error}
 				pdfFile={pdfFile}
 			/>
-			<div className="mt-4 md:mt-10 flex flex-col md:flex-row gap-4 justify-center font-semibold">
+			<div className="w-full mt-4 md:mt-10 flex flex-row flex-wrap gap-4 justify-center font-semibold">
 				<button
-					className="text-sm md:text-base bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer"
+					className="w-full md:w-auto text-sm md:text-base  bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer"
 					onClick={handleDownloadExcel}
 				>
 					Convert to Excel
@@ -77,7 +77,7 @@ const Hero = () => {
 							ctaSection.scrollIntoView({ behavior: 'smooth' });
 						}
 					}}
-					className="text-sm md:text-base bg-gray-400 text-white px-4 py-2 rounded opacity-70 cursor-pointer hover:opacity-90"
+					className="w-full md:w-auto text-sm md:text-base bg-gray-400 text-white px-4 py-2 rounded opacity-70 cursor-pointer hover:opacity-90"
 				>
 					Analyze Expenses (Coming Soon)
 				</button>
