@@ -13,6 +13,20 @@ const Navbar = (props: Props) => {
 
 	const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
 
+	const handleSmoothScroll = (
+		e: React.MouseEvent<HTMLAnchorElement>,
+		targetId: string
+	) => {
+		e.preventDefault();
+		const targetElement = document.getElementById(targetId);
+		if (targetElement) {
+			targetElement.scrollIntoView({
+				behavior: 'smooth',
+			});
+		}
+		setMobileMenuOpen(false);
+	};
+
 	return (
 		<>
 			<nav className="w-full px-4 md:px-10 py-4 shadow-md bg-white">
@@ -34,25 +48,29 @@ const Navbar = (props: Props) => {
 					</button>
 
 					{/* Desktop Nav Links */}
-					<div className="hidden sm:flex items-center gap-4">
-						<a
+					<div className="hidden sm:flex items-center gap-5 font-medium">
+						<Link
 							href="/"
 							className="text-gray-700 hover:text-blue-600 transition"
 						>
 							Upload PDF
-						</a>
-						<a
+						</Link>
+						<Link
 							href="#demo"
 							className="text-gray-700 hover:text-blue-600 transition"
+							onClick={(e) => handleSmoothScroll(e, 'demo')}
+							scroll={false}
 						>
 							How it works
-						</a>
-						<a
+						</Link>
+						<Link
 							href="#pricing"
 							className="text-gray-700 hover:text-blue-600 transition"
+							onClick={(e) => handleSmoothScroll(e, 'pricing')}
+							scroll={false}
 						>
 							Pricing
-						</a>
+						</Link>
 						<button
 							onClick={() => setShowModal(true)}
 							className="text-gray-700 hover:text-blue-600 transition"
@@ -62,6 +80,8 @@ const Navbar = (props: Props) => {
 						<Link
 							href="/#cta"
 							className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+							onClick={(e) => handleSmoothScroll(e, 'cta')}
+							scroll={false}
 						>
 							Join Waitlist
 						</Link>
@@ -71,24 +91,28 @@ const Navbar = (props: Props) => {
 				{/* Mobile Nav Links */}
 				{mobileMenuOpen && (
 					<div className="flex flex-col gap-2 mt-3 sm:hidden">
-						<a
+						<Link
 							href="/"
 							className="text-gray-700 hover:text-blue-600 transition"
 						>
 							Upload PDF
-						</a>
-						<a
+						</Link>
+						<Link
 							href="#demo"
 							className="text-gray-700 hover:text-blue-600 transition"
+							onClick={(e) => handleSmoothScroll(e, 'demo')}
+							scroll={false}
 						>
 							How it works
-						</a>
-						<a
+						</Link>
+						<Link
 							href="#pricing"
 							className="text-gray-700 hover:text-blue-600 transition"
+							onClick={(e) => handleSmoothScroll(e, 'pricing')}
+							scroll={false}
 						>
 							Pricing
-						</a>
+						</Link>
 						<button
 							onClick={() => {
 								setShowModal(true);
@@ -101,6 +125,8 @@ const Navbar = (props: Props) => {
 						<Link
 							href="/#cta"
 							className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+							onClick={(e) => handleSmoothScroll(e, 'cta')}
+							scroll={false}
 						>
 							Join Waitlist
 						</Link>
