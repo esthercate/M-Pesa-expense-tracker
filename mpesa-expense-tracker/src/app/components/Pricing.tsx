@@ -31,8 +31,8 @@ const Pricing = (props: Props) => {
 
 			<div className="max-w-sm mx-auto">
 				<div className="flex flex-col gap-1 bg-white rounded-2xl p-3 md:p-6 shadow-xl hover:shadow-2xl transition-shadow duration-300">
-					<h2 className="text-xl font-semibold">Free</h2>
-					<h1 className="text-2xl font-bold text-blue-600">Ksh. 0</h1>
+					<h1 className="text-2xl font-bold text-blue-600">Free</h1>
+					<hr className="my-2 text-gray-300" />
 					<ul className="space-y-2 text-sm text-gray-700 py-3">
 						{features.map((feature, idx) => (
 							<li
