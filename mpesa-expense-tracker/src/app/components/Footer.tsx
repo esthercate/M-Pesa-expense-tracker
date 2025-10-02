@@ -9,7 +9,7 @@ const Footer = (props: Props) => {
 
 	return (
 		<>
-			<footer className="w-full px-4 md:px-10 py-4 flex flex-col gap-3 justify-between items-center text-sm text-gray-600 border-t border-gray-300">
+			<footer className="w-full px-4 md:px-10 py-4 flex flex-col gap-2 justify-between items-center text-sm text-gray-600 border-t border-gray-300">
 				<p className="mb-2 sm:mb-0 text-center">
 					Copyright © 2025 M-pesa Expense Tracker.
 				</p>
