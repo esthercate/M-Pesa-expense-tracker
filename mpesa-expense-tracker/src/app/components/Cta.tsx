@@ -1,14 +1,14 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import {
 	FiUserCheck,
 	FiBarChart2,
 	FiTrendingUp,
-	FiLock,
 	FiPieChart,
 } from 'react-icons/fi';
 import Avatars from './Avatars';
-
-type CtaProps = {};
 
 const features = [
 	{
@@ -35,7 +35,37 @@ const features = [
 	},
 ];
 
-const Cta = (props: CtaProps) => {
+const Cta = () => {
+	const [email, setEmail] = useState('');
+	const [status, setStatus] = useState('');
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+
+		if (!email) {
+			setStatus('Please enter a valid email.');
+			return;
+		}
+
+		const templateParams = {
+			user_email: email,
+		};
+
+		try {
+			await emailjs.send(
+				process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+				process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+				templateParams,
+				process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+			);
+			setStatus('Thanks for joining the waitlist!');
+			setEmail('');
+		} catch (error) {
+			console.error('EmailJS Error:', error);
+			setStatus('Something went wrong. Please try again.');
+		}
+	};
+
 	return (
 		<div
 			className="w-full bg-blue-50 py-16 px-4"
@@ -69,20 +99,32 @@ const Cta = (props: CtaProps) => {
 				</div>
 
 				{/* Waitlist Input */}
-				<div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full mx-auto">
+				<form
+					onSubmit={handleSubmit}
+					className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full mx-auto"
+				>
 					<input
 						type="email"
 						placeholder="Enter your email"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+						required
 						className="w-full md:w-1/2 px-4 py-3 rounded-lg bg-white shadow-sm border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
 					/>
-					<button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition shadow-md">
+					<button
+						type="submit"
+						className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition shadow-md"
+					>
 						Join Waitlist
 					</button>
-				</div>
+				</form>
+
+				{status && <p className="mt-4 text-blue-800">{status}</p>}
+
 				<div className="flex items-center justify-center gap-3 mt-6">
 					<Avatars />
 					<span className="text-sm text-blue-900">
-						Join <span className="font-semibold ">125+</span> others on the
+						Join <span className="font-semibold">125+</span> others on the
 						waitlist
 					</span>
 				</div>
