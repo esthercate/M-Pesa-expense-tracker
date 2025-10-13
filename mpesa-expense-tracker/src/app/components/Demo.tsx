@@ -13,7 +13,7 @@ const Demo = (props: Props) => {
 				<h1 className="text-3xl md:text-4xl font-bold mb-4">How it Works!</h1>
 				<p className="text-gray-600 max-w-xl mx-auto">
 					Download M-Pesa app on your phone and create an account. Then follow
-					these steps to get started with our M-Pesa expense tracker.
+					these steps to get started with our Mpesa to excel converter.
 				</p>
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full items-center">
