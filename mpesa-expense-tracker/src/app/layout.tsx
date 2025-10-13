@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: 'M-pesa Expense Tracker',
-	description: '',
+	title: 'Mpesa to excel converter',
+	description: 'ConvertMpesa PDF Statement to excel converter',
 };
 
 export default function RootLayout({
