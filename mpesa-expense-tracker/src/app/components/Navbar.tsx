@@ -36,7 +36,7 @@ const Navbar = (props: Props) => {
 						className="flex items-center gap-2 font-bold text-gray-800 hover:text-blue-600 transition"
 					>
 						<GiExpense size={30} />
-						M-pesa Expense Tracker
+						Mpesa to Excel Converter
 					</Link>
 
 					{/* Hamburger Button */}
