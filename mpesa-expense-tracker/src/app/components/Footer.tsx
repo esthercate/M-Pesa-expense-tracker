@@ -2,9 +2,7 @@
 import React, { useState } from 'react';
 import Privacy from './Privacy'; // adjust path if needed
 
-type Props = {};
-
-const Footer = (props: Props) => {
+const Footer = () => {
 	const [showModal, setShowModal] = useState(false);
 
 	return (

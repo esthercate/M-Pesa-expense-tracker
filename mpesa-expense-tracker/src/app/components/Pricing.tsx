@@ -1,8 +1,6 @@
 import React from 'react';
 import { MdCancel, MdCheckCircle } from 'react-icons/md';
 
-type Props = {};
-
 const features = [
 	{ text: 'Convert M-Pesa PDF Statement to Excel', included: true },
 	{ text: 'Download Excel Statement', included: true },
@@ -15,7 +13,7 @@ const features = [
 	{ text: 'No expense history or comparisons', included: false },
 ];
 
-const Pricing = (props: Props) => {
+const Pricing = () => {
 	return (
 		<div
 			id="pricing"

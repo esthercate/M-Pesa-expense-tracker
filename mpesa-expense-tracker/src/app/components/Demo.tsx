@@ -1,9 +1,7 @@
 import React from 'react'
 import Image from 'next/image';
 
-type Props = {};
-
-const Demo = (props: Props) => {
+const Demo = () => {
 	return (
 		<div
 			id="demo"

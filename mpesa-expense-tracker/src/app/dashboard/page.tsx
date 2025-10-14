@@ -1,9 +1,8 @@
 import React from 'react'
 import Dashboard from '../components/Dashboard';
 
-type Props = {}
 
-const DashboardPage = (props: Props) => {
+const DashboardPage = () => {
   return (
     <div>
       <Dashboard />

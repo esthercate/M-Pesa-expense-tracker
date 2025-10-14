@@ -5,9 +5,7 @@ import React, { useState } from 'react';
 import Privacy from './Privacy'; // Modal component
 import Link from 'next/link';
 
-type Props = {};
-
-const Navbar = (props: Props) => {
+const Navbar = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
