@@ -1,6 +1,6 @@
 import React from 'react'
 import Image, { StaticImageData } from 'next/image'
-import avatar1 from './assets//Ellipse 2.png'
+import avatar1 from './assets/Ellipse 2.png'
 import avatar2 from './assets/Ellipse 3.png'
 import avatar3 from './assets/Ellipse 4.png'
 import avatar4 from './assets/Ellipse 5.png'
