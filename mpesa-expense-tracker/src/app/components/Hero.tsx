@@ -1,16 +1,13 @@
 'use client';
 import React, { useState } from 'react';
 import { useExtractText } from '@/hooks/useExtractText';
-import { SummaryEntry, TransactionEntry } from '@/types/mpesa';
 import { exportMpesaToExcel } from '@/utils/exportToExcel';
 import FileUpload from './FileUpload';
 import { toast } from 'react-toastify';
+import { useStore } from '@/store/store';
 
 const Hero = () => {
-	const [pdfFile, setPdfFile] = useState<File | null>(null);
-	const [error, setError] = useState('');
-	const [summary, setSummary] = useState<SummaryEntry[]>([]);
-	const [transactions, setTransactions] = useState<TransactionEntry[]>([]);
+	const { summary, transactions, error, setError, setSummary, setTransactions, pdfFile, setPdfFile } = useStore();
 	const { extractTextFromPDF } = useExtractText();
 
 	const handleFile = async (file: File) => {
