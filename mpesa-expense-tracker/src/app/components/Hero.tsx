@@ -41,15 +41,15 @@ const Hero = () => {
 	};
 
 	return (
-		<div className="w-full max-w-2xl mx-auto mt-2 md:mt-10 px-0 md:px-4">
+		<div className="w-full max-w-3xl mx-auto mt-2 md:mt-10 px-0 md:px-4">
 			<div className="text-center mb-8">
 				<h1 className="text-lg md:text-3xl font-bold mb-2">
-					Turn Your M-Pesa PDF Into Insight or Excel
+					Convert your M-Pesa PDF Statement into Excel
 				</h1>
 				<p className="text-gray-600 max-w-lg mx-auto text-sm md:text-lg">
 					Upload your{' '}
 					<span className="font-semibold text-blue-600">
-						M-Pesa statement PDF
+						M-Pesa PDF Statement
 					</span>{' '}
 					to analyze your spending or simply convert it into an Excel file — all
 					right in your browser.
