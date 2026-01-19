@@ -2,7 +2,7 @@
 
 A simple web app to convert your M-Pesa PDF statements into Excel and analyze your spending — all in the browser.
 
-##Features:
+## Features:
 
 - Upload M-Pesa PDF statements
 
