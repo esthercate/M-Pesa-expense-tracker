@@ -43,7 +43,7 @@ A simple web app to convert your M-Pesa PDF statements into Excel and analyze yo
 
 ## Live Link
 
-[Live Link](https://m-pesa-expense-tracker.vercel.app/)
+- [Live Link](https://m-pesa-expense-tracker.vercel.app/)
 
 
 ## Authors
@@ -54,4 +54,4 @@ A simple web app to convert your M-Pesa PDF statements into Excel and analyze yo
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+- [MIT](https://choosealicense.com/licenses/mit/)
