@@ -5,6 +5,12 @@ A simple web app to convert your M-Pesa PDF statements into Excel and analyze yo
 
 
 
+## Tech Stack
+
+**Client:** Next.js, Zustand, TailwindCSS
+
+
+
 ## Screenshots
 
 ![App Screenshot](/mpesa-expense-tracker/public/screenshot.png)
@@ -32,12 +38,6 @@ A simple web app to convert your M-Pesa PDF statements into Excel and analyze yo
 - Compare Expenses: See how your current expenses stack up against previous months.
 
 - Visual Charts: Understand trends with interactive graphs and breakdowns.
-
-
-
-## Tech Stack
-
-**Client:** Next.js, Zustand, TailwindCSS
 
 
 
