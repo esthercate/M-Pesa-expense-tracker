@@ -7,7 +7,7 @@ A simple web app to convert your M-Pesa PDF statements into Excel and analyze yo
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](/mpesa-expense-tracker/public/screenshot.png)
 
 
 
