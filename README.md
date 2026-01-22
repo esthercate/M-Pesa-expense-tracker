@@ -4,6 +4,8 @@
 A simple web app to convert your M-Pesa PDF statements into Excel and analyze your spending — all in the browser.
 
 
+### Homepage
+
 ![Homepage](/mpesa-expense-tracker/public/screenshot.png)
 
 
@@ -77,3 +79,4 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 ## Connect with Me
 
 - [LinkedIn](https://www.linkedin.com/in/catherine-esther-vuthi/)
+- [X](https://x.com/Cate_ev)
