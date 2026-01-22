@@ -4,17 +4,12 @@
 A simple web app to convert your M-Pesa PDF statements into Excel and analyze your spending — all in the browser.
 
 
-
-## Tech Stack
-
-**Client:** Next.js, Zustand, TailwindCSS
+![Homepage](/mpesa-expense-tracker/public/screenshot.png)
 
 
+## Live Demo
 
-## App Screenshots
-
-![App Screenshot](/mpesa-expense-tracker/public/screenshot.png)
-
+- [Live Link](https://m-pesa-expense-tracker.vercel.app/)
 
 
 ## Features
@@ -28,6 +23,36 @@ A simple web app to convert your M-Pesa PDF statements into Excel and analyze yo
 - (Coming soon) Visual dashboards to analyze monthly spending with interactive graphs
 
 
+## Technologies Used
+
+ -Next.js, Zustand, TailwindCSS
+- **Next.js** – React Framework
+- **Zustand** – State management**
+- **TypeScript** - Business logic
+- **Tailwind CSS** – Styling
+- **EmailJS** – Contact form handling
+- **Vercel** – Deployment
+
+
+## Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/esthercate/M-Pesa-expense-tracker.git
+   cd mpesa-expense-tracker
+  
+2. Install dependencies
+   ```bash
+   pnpm install
+
+3. Run the development server
+   ```bash
+   pnpm dev
+
+4. Visit
+   ```arduino
+   http://localhost:3000
+
 
 ## Upcoming Features
 
@@ -40,18 +65,16 @@ A simple web app to convert your M-Pesa PDF statements into Excel and analyze yo
 - Visual Charts: Understand trends with interactive graphs and breakdowns.
 
 
-
-## Live Link
-
-- [Live Link](https://m-pesa-expense-tracker.vercel.app/)
-
-
-## Authors
+## Author
 
 - [@esthercate](https://github.com/esthercate)
 
 
-
 ## License
 
-- [MIT](https://choosealicense.com/licenses/mit/)
+This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
+
+
+## Connect with Me
+
+- [LinkedIn](https://www.linkedin.com/in/catherine-esther-vuthi/)
