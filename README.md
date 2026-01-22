@@ -25,12 +25,11 @@ A simple web app to convert your M-Pesa PDF statements into Excel and analyze yo
 
 ## Technologies Used
 
- -Next.js, Zustand, TailwindCSS
 - **Next.js** – React Framework
 - **Zustand** – State management**
 - **TypeScript** - Business logic
 - **Tailwind CSS** – Styling
-- **EmailJS** – Contact form handling
+- **EmailJS** – Waitlist form handling
 - **Vercel** – Deployment
 
 
