@@ -1,5 +1,5 @@
 
-# Project Title
+# M-Pesa PDF Statement to Excel Converter
 
 A simple web app to convert your M-Pesa PDF statements into Excel and analyze your spending — all in the browser.
 
