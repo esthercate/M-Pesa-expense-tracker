@@ -1,9 +1,10 @@
 'use client';
-import { GiExpense } from 'react-icons/gi';
-import { HiMenu, HiX } from 'react-icons/hi';
 import React, { useState } from 'react';
-import Privacy from './Privacy'; // Modal component
 import Link from 'next/link';
+// CHANGED: added FiBarChart2 for the logo mark
+import { HiMenu, HiX } from 'react-icons/hi';
+import { FiBarChart2 } from 'react-icons/fi';
+import Privacy from './Privacy'; // Modal component
 
 const Navbar = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -13,120 +14,99 @@ const Navbar = () => {
 
 	const handleSmoothScroll = (
 		e: React.MouseEvent<HTMLAnchorElement>,
-		targetId: string
+		targetId: string,
 	) => {
 		e.preventDefault();
 		const targetElement = document.getElementById(targetId);
 		if (targetElement) {
-			targetElement.scrollIntoView({
-				behavior: 'smooth',
-			});
+			targetElement.scrollIntoView({ behavior: 'smooth' });
 		}
 		setMobileMenuOpen(false);
 	};
 
 	return (
 		<>
-			<nav className="w-full px-4 md:px-10 py-4 shadow-md bg-white">
-				<div className="flex items-center justify-between">
+			<nav className="sticky top-0 z-40 w-full border-b border-hairline bg-canvas/80 backdrop-blur-md">
+				<div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 md:px-8">
 					<Link
 						href="/"
-						className="flex items-center gap-2 font-bold text-gray-800 hover:text-blue-600 transition"
+						className="flex items-center gap-2.5 transition hover:opacity-80"
 					>
-						<GiExpense size={30} />
-						Mpesa to Excel Converter
+						<span className="flex h-8 w-8 items-center justify-center rounded-[10px] border border-accent-line bg-accent-soft">
+							{/* CHANGED: inline SVG → FiBarChart2 */}
+							<FiBarChart2
+								size={16}
+								className="text-accent"
+							/>
+						</span>
+						<span className="font-display text-[15px] font-semibold tracking-tight text-ink">
+							Mpesa to Excel
+						</span>
 					</Link>
 
-					{/* Hamburger Button */}
+					{/* Hamburger */}
 					<button
-						className="sm:hidden text-2xl text-blue-600"
+						className="flex h-11 w-11 items-center justify-center text-2xl text-muted sm:hidden"
 						onClick={toggleMobileMenu}
+						aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
 					>
 						{mobileMenuOpen ? <HiX /> : <HiMenu />}
 					</button>
 
-					{/* Desktop Nav Links */}
-					<div className="hidden sm:flex items-center gap-5 font-medium">
-						<Link
-							href="/"
-							className="text-gray-700 hover:text-blue-600 transition"
-						>
-							Upload PDF
-						</Link>
+					{/* Desktop links */}
+					<div className="hidden items-center gap-1 sm:flex">
 						<Link
 							href="#demo"
-							className="text-gray-700 hover:text-blue-600 transition"
+							className="flex h-11 items-center px-4 text-sm text-muted transition hover:text-ink"
 							onClick={(e) => handleSmoothScroll(e, 'demo')}
 							scroll={false}
 						>
 							How it works
 						</Link>
-						<Link
-							href="#pricing"
-							className="text-gray-700 hover:text-blue-600 transition"
-							onClick={(e) => handleSmoothScroll(e, 'pricing')}
-							scroll={false}
-						>
-							Pricing
-						</Link>
 						<button
 							onClick={() => setShowModal(true)}
-							className="text-gray-700 hover:text-blue-600 transition"
+							className="flex h-11 cursor-pointer items-center px-4 text-sm text-muted transition hover:text-ink"
 						>
 							Privacy
 						</button>
 						<Link
-							href="/#cta"
-							className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-							onClick={(e) => handleSmoothScroll(e, 'cta')}
+							href="#hire"
+							className="ml-2 flex h-11 items-center rounded-control border border-hairline-strong bg-white/5 px-5 text-sm font-semibold text-ink transition hover:bg-white/10"
+							onClick={(e) => handleSmoothScroll(e, 'hire')}
 							scroll={false}
 						>
-							Join Waitlist
+							Contact
 						</Link>
 					</div>
 				</div>
 
-				{/* Mobile Nav Links */}
+				{/* Mobile links */}
 				{mobileMenuOpen && (
-					<div className="flex flex-col gap-2 mt-3 sm:hidden">
-						<Link
-							href="/"
-							className="text-gray-700 hover:text-blue-600 transition"
-						>
-							Upload PDF
-						</Link>
+					<div className="flex flex-col gap-1 border-t border-hairline px-5 py-3 sm:hidden">
 						<Link
 							href="#demo"
-							className="text-gray-700 hover:text-blue-600 transition"
+							className="flex h-11 items-center text-sm text-muted transition hover:text-ink"
 							onClick={(e) => handleSmoothScroll(e, 'demo')}
 							scroll={false}
 						>
 							How it works
-						</Link>
-						<Link
-							href="#pricing"
-							className="text-gray-700 hover:text-blue-600 transition"
-							onClick={(e) => handleSmoothScroll(e, 'pricing')}
-							scroll={false}
-						>
-							Pricing
 						</Link>
 						<button
 							onClick={() => {
 								setShowModal(true);
 								setMobileMenuOpen(false);
 							}}
-							className="text-gray-700 hover:text-blue-600 transition text-left"
+							className="flex h-11 cursor-pointer items-center text-left text-sm text-muted transition hover:text-ink"
 						>
 							Privacy
 						</button>
 						<Link
-							href="/#cta"
-							className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-							onClick={(e) => handleSmoothScroll(e, 'cta')}
+							href="#hire"
+							className="mt-1 flex h-11 items-center justify-center rounded-control border border-hairline-strong bg-white/5 text-sm font-semibold text-ink"
+							onClick={(e) => handleSmoothScroll(e, 'hire')}
 							scroll={false}
 						>
-							Join Waitlist
+							Contact
 						</Link>
 					</div>
 				)}

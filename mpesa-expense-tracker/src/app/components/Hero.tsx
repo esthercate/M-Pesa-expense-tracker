@@ -3,83 +3,148 @@ import React, { useState } from 'react';
 import { useExtractText } from '@/hooks/useExtractText';
 import { exportMpesaToExcel } from '@/utils/exportToExcel';
 import FileUpload from './FileUpload';
+import StatementSummary from './StatementSummary';
+// CHANGED: added FiDownload
+import { FiDownload } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { useStore } from '@/store/store';
 
 const Hero = () => {
-	const { summary, transactions, error, setError, setSummary, setTransactions, pdfFile, setPdfFile } = useStore();
+	const {
+		summary,
+		transactions,
+		error,
+		setError,
+		setSummary,
+		setTransactions,
+		pdfFile,
+		setPdfFile,
+	} = useStore();
 	const { extractTextFromPDF } = useExtractText();
+	const [isExporting, setIsExporting] = useState(false);
 
 	const handleFile = async (file: File) => {
-		if (file && file.type === 'application/pdf') {
-			setPdfFile(file);
-			setError('');
-
-			try {
-				const text: string = await extractTextFromPDF(file);
-				const { parseMpesaStatementText } = await import('@/utils/mpesaParser');
-				const result = parseMpesaStatementText(text);
-
-				setSummary(result.summary);
-				setTransactions(result.transactions);
-			} catch (err) {
-				console.error('Error parsing PDF:', err);
-				setError('Failed to parse PDF file.');
-			}
-		} else {
+		if (!file || file.type !== 'application/pdf') {
 			setPdfFile(null);
 			setError('Only PDF files are allowed.');
+			return;
+		}
+
+		setPdfFile(file);
+		setError('');
+		setSummary([]);
+		setTransactions([]);
+
+		try {
+			const text: string = await extractTextFromPDF(file);
+			const { parseMpesaStatementText } = await import('@/utils/mpesaParser');
+			const result = parseMpesaStatementText(text);
+
+			if (!result.transactions.length) {
+				setError(
+					"We couldn't read any transactions from that file. It may be a statement format we don't support yet.",
+				);
+				return;
+			}
+
+			setSummary(result.summary);
+			setTransactions(result.transactions);
+			toast.success(`Read ${result.transactions.length} transactions.`);
+		} catch (err) {
+			console.error('Error parsing PDF:', err);
+			setError('Failed to read that PDF. Please try another file.');
 		}
 	};
 
-	const handleDownloadExcel = () => {
-		if (summary.length && transactions.length) {
-			exportMpesaToExcel(summary, transactions);
-		} else {
-			toast.error('Please upload PDF to continue.');
+	const handleDownloadExcel = async () => {
+		if (!transactions.length) {
+			toast.error('Upload an M-Pesa statement first.');
+			return;
+		}
+
+		setIsExporting(true);
+		try {
+			const fileName = await exportMpesaToExcel(summary, transactions);
+			toast.success(`Downloaded ${fileName}`);
+		} catch (err) {
+			console.error('Error building workbook:', err);
+			toast.error('Could not build the Excel file. Please try again.');
+		} finally {
+			setIsExporting(false);
 		}
 	};
 
 	return (
-		<div className="w-full max-w-3xl mx-auto mt-2 md:mt-10 px-0 md:px-4">
-			<div className="text-center mb-8">
-				<h1 className="text-lg md:text-3xl font-bold mb-2">
-					Convert your M-Pesa PDF Statement into Excel
-				</h1>
-				<p className="text-gray-600 max-w-lg mx-auto text-sm md:text-lg">
-					Upload your{' '}
-					<span className="font-semibold text-blue-600">
-						M-Pesa PDF Statement
-					</span>{' '}
-					to analyze your spending or simply convert it into an Excel file — all
-					right in your browser.
-				</p>
-			</div>
-			<FileUpload
-				onFileSelect={handleFile}
-				error={error}
-				pdfFile={pdfFile}
+		<section className="relative overflow-hidden px-5 py-10 md:px-8">
+			<div
+				aria-hidden
+				className="pointer-events-none absolute -top-72 left-1/2 h-[640px] w-[1000px] -translate-x-1/2 rounded-full"
+				style={{
+					background:
+						'radial-gradient(ellipse at center, rgba(62,207,142,0.13), rgba(62,207,142,0) 68%)',
+				}}
 			/>
-			<div className="w-full mt-4 md:mt-10 flex flex-row flex-wrap gap-4 justify-center font-semibold">
-				<button
-					className="w-full md:w-auto text-sm md:text-base  bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer"
-					onClick={handleDownloadExcel}
-				>
-					Convert to Excel
-				</button>
-				<button
-					onClick={() => {
-						const ctaSection = document.getElementById('cta');
-						if (ctaSection) {
-							ctaSection.scrollIntoView({ behavior: 'smooth' });
-						}
-					}}
-					className="w-full md:w-auto text-sm md:text-base bg-gray-400 text-white px-4 py-2 rounded opacity-70 cursor-pointer hover:opacity-90"
-				>
-					Analyze Expenses (Coming Soon)
-				</button>
+
+			<div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
+				<span className="inline-flex h-9 items-center gap-2.5 rounded-full border border-accent-line bg-accent-soft px-4 text-[13px] font-medium text-accent">
+					<span className="h-1.5 w-1.5 rounded-full bg-accent" />
+					Free · nothing leaves your device
+				</span>
+
+				<h1 className="mt-7 text-pretty font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink md:text-6xl">
+					Turn your M-Pesa statement into a real spreadsheet
+				</h1>
+				<p className="mt-6 max-w-xl text-base leading-relaxed text-muted md:text-lg">
+					Drop in the PDF Statement. Get every transaction in Excel, your totals
+					broken down by type, and one figure that&apos;s easy to lose track -
+					what you&apos;ve paid in transaction fees.
+				</p>
+
+				<div className="mt-10 w-full">
+					<FileUpload
+						onFileSelect={handleFile}
+						error={error}
+						pdfFile={pdfFile}
+					/>
+				</div>
+
+				{!transactions.length && (
+					<div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-faint">
+						<span>No account</span>
+						<span className="text-white/15">·</span>
+						<span>No upload</span>
+						<span className="text-white/15">·</span>
+						<span>No limit</span>
+					</div>
+				)}
 			</div>
-		</div>
+
+			<div className="relative mx-auto max-w-6xl text-left">
+				<StatementSummary />
+
+				{transactions.length > 0 && (
+					<div className="mt-6 flex flex-col items-start gap-4 rounded-card border border-accent-line bg-gradient-to-b from-accent-soft to-transparent p-7 sm:flex-row sm:items-center sm:justify-between">
+						<div>
+							<p className="font-display text-lg font-semibold tracking-tight text-ink">
+								Take the spreadsheet
+							</p>
+							<p className="mt-1.5 text-sm text-muted">
+								Two sheets, formatted, filters on, named after its own date
+								range.
+							</p>
+						</div>
+						<button
+							onClick={handleDownloadExcel}
+							disabled={isExporting}
+							className="flex h-[52px] w-full shrink-0 cursor-pointer items-center justify-center gap-2.5 rounded-control bg-accent px-7 text-base font-semibold text-accent-ink transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+						>
+							{!isExporting && <FiDownload size={18} />}
+							{isExporting ? 'Building your file…' : 'Download Excel'}
+						</button>
+					</div>
+				)}
+			</div>
+		</section>
 	);
 };
 

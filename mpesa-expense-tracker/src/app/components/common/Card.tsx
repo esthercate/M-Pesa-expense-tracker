@@ -4,16 +4,23 @@ type Props = {
 	title: string;
 	value: string | number;
 	icon?: React.ReactNode;
+	tone?: 'default' | 'accent';
 };
 
-const Card: React.FC<Props> = ({ title, value, icon }) => {
+const Card: React.FC<Props> = ({ title, value, icon, tone = 'default' }) => {
 	return (
-		<div className="rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col gap-2 bg-white hover:shadow-md transition-shadow w-full">
-			<div className="flex items-center gap-2 text-blue-500">
+		<div className="flex w-full flex-col gap-4 rounded-card border border-hairline bg-surface p-6 transition-colors hover:border-hairline-strong">
+			<div className="flex items-center gap-2.5">
 				{icon}
-				<h2 className="text-sm font-medium text-gray-600">{title}</h2>
+				<h2 className="text-sm font-medium text-muted">{title}</h2>
 			</div>
-			<p className="text-lg font-semibold">{value}</p>
+			<p
+				className={`tabular font-display text-2xl font-semibold tracking-tight ${
+					tone === 'accent' ? 'text-accent' : 'text-ink'
+				}`}
+			>
+				{value}
+			</p>
 		</div>
 	);
 };

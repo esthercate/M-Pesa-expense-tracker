@@ -1,19 +1,57 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+	/* Surfaces */
+	--color-canvas: #0a0b0d;
+	--color-surface: #131519;
+	--color-surface-2: #1a1d22;
+
+	/* Hairlines */
+	--color-hairline: rgba(255, 255, 255, 0.07);
+	--color-hairline-strong: rgba(255, 255, 255, 0.12);
+
+	/* Text */
+	--color-ink: #eceef1;
+	--color-muted: #8b929b;
+	--color-faint: #5d646d;
+
+	/* Accents — matched lightness and chroma, different hue.
+	   accent = money, warn = fees. Never used for anything else. */
+	--color-accent: #3ecf8e;
+	--color-accent-soft: rgba(62, 207, 142, 0.1);
+	--color-accent-line: rgba(62, 207, 142, 0.22);
+	--color-accent-ink: #06251a;
+
+	--color-warn: #e8955a;
+	--color-warn-soft: rgba(232, 149, 90, 0.1);
+	--color-warn-line: rgba(232, 149, 90, 0.22);
+
+	/* Type */
+	--font-display: var(--font-space-grotesk), ui-monospace, Menlo, monospace;
+	--font-sans: var(--font-jakarta), system-ui, sans-serif;
+
+	/* Radii */
+	--radius-card: 18px;
+	--radius-control: 12px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+	color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	background: var(--color-canvas);
+	color: var(--color-ink);
+	font-family: var(--font-sans);
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Money should never jitter as digits change. */
+.tabular {
+	font-variant-numeric: tabular-nums;
+}
+
+::selection {
+	background: var(--color-accent);
+	color: var(--color-accent-ink);
 }
