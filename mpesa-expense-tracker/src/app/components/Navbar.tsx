@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-// CHANGED: added FiBarChart2 for the logo mark
 import { HiMenu, HiX } from 'react-icons/hi';
 import { FiBarChart2 } from 'react-icons/fi';
 import Privacy from './Privacy'; // Modal component
@@ -33,13 +32,12 @@ const Navbar = () => {
 						className="flex items-center gap-2.5 transition hover:opacity-80"
 					>
 						<span className="flex h-8 w-8 items-center justify-center rounded-[10px] border border-accent-line bg-accent-soft">
-							{/* CHANGED: inline SVG → FiBarChart2 */}
 							<FiBarChart2
 								size={16}
 								className="text-accent"
 							/>
 						</span>
-						<span className="font-display text-[15px] font-semibold tracking-tight text-ink">
+						<span className="font-display text-base font-semibold tracking-tight text-ink">
 							Mpesa to Excel
 						</span>
 					</Link>
@@ -62,6 +60,15 @@ const Navbar = () => {
 							scroll={false}
 						>
 							How it works
+						</Link>
+						{/* CHANGED: new — the FAQ section existed but nothing led to it */}
+						<Link
+							href="#faq"
+							className="flex h-11 items-center px-4 text-sm text-muted transition hover:text-ink"
+							onClick={(e) => handleSmoothScroll(e, 'faq')}
+							scroll={false}
+						>
+							Questions
 						</Link>
 						<button
 							onClick={() => setShowModal(true)}
@@ -90,6 +97,15 @@ const Navbar = () => {
 							scroll={false}
 						>
 							How it works
+						</Link>
+						{/* CHANGED: new */}
+						<Link
+							href="#faq"
+							className="flex h-11 items-center text-sm text-muted transition hover:text-ink"
+							onClick={(e) => handleSmoothScroll(e, 'faq')}
+							scroll={false}
+						>
+							Questions
 						</Link>
 						<button
 							onClick={() => {

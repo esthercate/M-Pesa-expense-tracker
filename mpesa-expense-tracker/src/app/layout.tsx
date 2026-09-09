@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
-// CHANGED: Geist → Space Grotesk (display + figures) and Plus Jakarta Sans (copy)
 import { Space_Grotesk, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+// CHANGED: metadata now builds from the shared site constants
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '@/lib/site';
 
 const spaceGrotesk = Space_Grotesk({
 	variable: '--font-space-grotesk',
@@ -19,12 +20,30 @@ const jakarta = Plus_Jakarta_Sans({
 	weight: ['400', '500', '600'],
 });
 
-// CHANGED: title and description now carry the phrases people search for,
-// since search traffic is the whole point of this page.
+const TITLE = 'Convert M-Pesa PDF Statement to Excel — free, in your browser';
+
 export const metadata: Metadata = {
-	title: 'Convert M-Pesa PDF Statement to Excel — free, in your browser',
-	description:
-		'Turn your M-Pesa PDF statement into a clean Excel file with every transaction, your totals, and what you paid in fees. Free, no account, and your statement never leaves your device.',
+	// CHANGED: without metadataBase, Next can't build absolute URLs for the
+	// social tags and previews silently break.
+	metadataBase: new URL(SITE_URL),
+	title: TITLE,
+	description: SITE_DESCRIPTION,
+	// CHANGED: new — canonical, social cards and explicit indexing
+	alternates: { canonical: '/' },
+	openGraph: {
+		type: 'website',
+		url: '/',
+		siteName: SITE_NAME,
+		title: TITLE,
+		description: SITE_DESCRIPTION,
+		locale: 'en_KE',
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: TITLE,
+		description: SITE_DESCRIPTION,
+	},
+	robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -35,14 +54,11 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				// CHANGED: font variables renamed; flex column so the footer sits
-				// at the bottom on short pages.
 				className={`${spaceGrotesk.variable} ${jakarta.variable} antialiased min-h-screen flex flex-col`}
 			>
 				<Navbar />
 				<main className="flex-1">{children}</main>
 				<Footer />
-				{/* CHANGED: dark toasts, bottom-right so they don't cover the nav */}
 				<ToastContainer
 					theme="dark"
 					position="bottom-right"
