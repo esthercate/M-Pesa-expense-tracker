@@ -2,14 +2,15 @@ import React from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
 import { FiMail, FiArrowUpRight } from 'react-icons/fi';
 
-const WHATSAPP_NUMBER = '254181244759';
+import { whatsappLink } from '@/lib/site';
+
+const whatsappUrl = whatsappLink(
+	'Hi Catherine, I used your M-Pesa to Excel converter and I have something I would like built.',
+);
 
 const WHATSAPP_MESSAGE =
 	'Hi Catherine, I used your M-Pesa to Excel converter and I have something I would like built.';
 
-const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-	WHATSAPP_MESSAGE
-)}`;
 
 const PORTFOLIO_URL = 'https://catherine-vuthi.vercel.app/';
 const EMAIL = 'catherinev.codes@gmail.com';

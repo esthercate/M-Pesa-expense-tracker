@@ -1,3 +1,10 @@
+/**
+ * Pure aggregation over parsed M-Pesa transactions.
+ *
+ * No React and no ExcelJS in here — the on-screen summary and the Summary sheet
+ * in the workbook both call this, so the two can never disagree.
+ */
+
 const MONTHS = [
 	'Jan',
 	'Feb',
@@ -27,10 +34,7 @@ export function toDateStamp(date) {
 	return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }
 
-/**
- * CHANGED: new — "2025-07-01" → "1 Jul 2025". Splits the string rather than
- * using new Date(), so no timezone can shift the day.
- */
+/** "2025-07-01" → "1 Jul 2025". Split, not parsed, so no timezone can shift it. */
 export function formatStatementDate(iso, withYear = true) {
 	if (!iso) return '';
 	const [y, m, d] = iso.split('-');
@@ -38,8 +42,22 @@ export function formatStatementDate(iso, withYear = true) {
 	return withYear ? `${base} ${y}` : base;
 }
 
-/** Safaricom's own fee rows. NOTE: verify this against a real statement. */
-export const isChargeRow = (tx) => /charge/i.test(tx.details || '');
+/**
+ * CHANGED: was /charge/i, which matched "Recharge for Customer ... SAFARICOM
+ * DATA BUNDLES" and counted every airtime and bundle purchase as a fee.
+ *
+ * Two guards now:
+ *   1. Whole words only — \bcharge\b does not match "Recharge", because there
+ *      is no word boundary between "Re" and "charge".
+ *   2. A fee is always money out and never money in, so a row with anything in
+ *      the paid-in column is disqualified regardless of its wording.
+ */
+const FEE_WORDS = /\b(charge|charges|fee|fees|excise|commission|tariff)\b/i;
+
+export const isChargeRow = (tx) =>
+	FEE_WORDS.test(tx.details || '') &&
+	(tx.withdrawn || 0) > 0 &&
+	(tx.paidIn || 0) === 0;
 
 /** "KES 12,450.00" */
 export function formatKES(amount) {
@@ -50,9 +68,9 @@ export function formatKES(amount) {
 }
 
 /**
- * CHANGED: new — statements can arrive newest-first, which made the closing
- * balance the OLDEST balance. Sort a copy by date when every row parses; when
- * any row doesn't, leave the order alone rather than shuffling it half-blind.
+ * Statements can arrive newest-first, which would make the closing balance the
+ * OLDEST balance. Sort a copy by date when every row parses; when any row does
+ * not, leave the order alone rather than shuffling it half-blind.
  */
 function inDateOrder(transactions) {
 	const decorated = transactions.map((tx, index) => ({
@@ -68,11 +86,7 @@ function inDateOrder(transactions) {
 		.map((entry) => entry.tx);
 }
 
-/**
- * CHANGED: new — money in/out per calendar month, oldest first. This is what
- * people actually came to find out; a single figure across six months isn't
- * useful for budgeting.
- */
+/** Money in/out per calendar month, oldest first. */
 function groupByMonth(transactions) {
 	const months = new Map();
 
@@ -101,7 +115,6 @@ function groupByMonth(transactions) {
 }
 
 export function summariseTransactions(transactions = []) {
-	// CHANGED: everything below now works from the date-ordered copy
 	const ordered = inDateOrder(transactions);
 
 	const dates = ordered
@@ -111,14 +124,24 @@ export function summariseTransactions(transactions = []) {
 
 	const totalIn = ordered.reduce((sum, tx) => sum + (tx.paidIn || 0), 0);
 	const totalOut = ordered.reduce((sum, tx) => sum + (tx.withdrawn || 0), 0);
-	const charges = ordered
-		.filter(isChargeRow)
-		.reduce((sum, tx) => sum + (tx.withdrawn || 0), 0);
+
+	const chargeRows = ordered.filter(isChargeRow);
+	const charges = chargeRows.reduce((sum, tx) => sum + (tx.withdrawn || 0), 0);
+
+	console.log(
+		'[fees]',
+		chargeRows.length,
+		chargeRows.map((tx) => (tx.details.match(FEE_WORDS) || [''])[0]),
+	);
 
 	const closing = ordered.length ? ordered[ordered.length - 1].balance || 0 : 0;
 
 	const start = dates.length ? toDateStamp(dates[0]) : null;
 	const end = dates.length ? toDateStamp(dates[dates.length - 1]) : null;
+
+	// CHANGED: fees as a share of actual SPENDING, not of spending-plus-fees.
+	// Dividing by totalOut put the fees inside their own denominator.
+	const spendExcludingFees = totalOut - charges;
 
 	return {
 		start,
@@ -133,7 +156,10 @@ export function summariseTransactions(transactions = []) {
 		totalOut,
 		net: totalIn - totalOut,
 		charges,
-		chargeShare: totalOut > 0 ? (charges / totalOut) * 100 : 0,
+		// CHANGED: new — so you can eyeball what got counted as a fee
+		chargeCount: chargeRows.length,
+		chargeShare:
+			spendExcludingFees > 0 ? (charges / spendExcludingFees) * 100 : 0,
 		closing,
 		byMonth: groupByMonth(ordered),
 	};

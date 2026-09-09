@@ -1,5 +1,3 @@
-// NEW FILE: shared site constants. Swapping to a custom domain later is one
-// env var (NEXT_PUBLIC_SITE_URL) rather than a hunt through the codebase.
 export const SITE_URL = (
 	process.env.NEXT_PUBLIC_SITE_URL ||
 	'https://m-pesa-pdf-statement-to-excel-converter.vercel.app/'
@@ -7,11 +5,14 @@ export const SITE_URL = (
 
 export const SITE_NAME = 'Mpesa to Excel';
 
+export const WHATSAPP_NUMBER = '254181244759';
+
+export const whatsappLink = (message: string) =>
+	`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
 export const SITE_DESCRIPTION =
 	'Convert your M-Pesa PDF statement into a clean Excel file with every transaction, your monthly totals, and what you paid in transaction fees. Free, no account, and your statement never leaves your device.';
 
-// Plain strings, deliberately: these are rendered on the page AND emitted as
-// FAQPage structured data, and JSON-LD answers must be plain text.
 export const FAQS = [
 	{
 		q: 'How do I convert an M-Pesa statement to Excel?',
