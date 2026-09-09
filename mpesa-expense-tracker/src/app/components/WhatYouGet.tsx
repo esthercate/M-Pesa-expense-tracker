@@ -6,7 +6,7 @@ import type { IconType } from 'react-icons';
 type Item = {
 	title: string;
 	body: string;
-	tone: 'default' | 'warn';
+	tone?: 'default' | 'warn';
 	Icon: IconType;
 };
 
@@ -14,19 +14,16 @@ const items: Item[] = [
 	{
 		title: 'A Summary sheet',
 		body: 'Period, money in and out, net movement, closing balance, plus every transaction type broken out with its own total.',
-		tone: 'default',
 		Icon: FiGrid,
 	},
 	{
 		title: 'Every row, properly typed',
 		body: 'Real dates and real numbers with filters switched on — sortable and ready to pivot, not text dumped into cells.',
-		tone: 'default',
 		Icon: FiFilter,
 	},
 	{
 		title: 'What the fees cost you',
 		body: 'Every charge on the statement, added up and shown on screen. Most people have never seen this number for a full year.',
-		tone: 'warn',
 		Icon: FiDollarSign,
 	},
 ];
@@ -46,22 +43,14 @@ const WhatYouGet = () => {
 					{items.map((item) => (
 						<div
 							key={item.title}
-							className={`rounded-card bg-surface p-8 ${
-								item.tone === 'warn'
-									? 'border border-warn-line'
-									: 'border border-hairline'
-							}`}
+							className={`rounded-card bg-surface p-8 border border-white/5`}
 						>
 							<span
-								className={`mb-6 flex h-10 w-10 items-center justify-center rounded-xl border ${
-									item.tone === 'warn'
-										? 'border-warn-line bg-warn-soft'
-										: 'border-hairline bg-white/5'
-								}`}
+								className={`mb-6 flex h-10 w-10 items-center justify-center rounded-xl border border-warn-line bg-warn-soft `}
 							>
 								<item.Icon
 									size={19}
-									className={item.tone === 'warn' ? 'text-warn' : 'text-ink'}
+									className="text-accent"
 								/>
 							</span>
 							<p className="text-lg font-semibold text-ink">{item.title}</p>
