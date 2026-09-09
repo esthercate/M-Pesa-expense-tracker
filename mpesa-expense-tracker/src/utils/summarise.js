@@ -43,16 +43,21 @@ export function formatStatementDate(iso, withYear = true) {
 }
 
 /**
- * CHANGED: was /charge/i, which matched "Recharge for Customer ... SAFARICOM
- * DATA BUNDLES" and counted every airtime and bundle purchase as a fee.
+ * Which rows are transaction charges.
  *
- * Two guards now:
+ * CHANGED: narrowed back to "charge"/"charges" only. Safaricom's published
+ * consumer tariffs use "charge" and "transaction charges" throughout and never
+ * "fee", so matching `fee` was catching rows that are not charges. Airtime and
+ * data purchases are listed as FREE, which is a second reason no Recharge row
+ * should ever be counted here.
+ *
+ * Two guards remain:
  *   1. Whole words only — \bcharge\b does not match "Recharge", because there
  *      is no word boundary between "Re" and "charge".
- *   2. A fee is always money out and never money in, so a row with anything in
- *      the paid-in column is disqualified regardless of its wording.
+ *   2. A charge is always money out and never money in, so a row with anything
+ *      in the paid-in column is disqualified regardless of its wording.
  */
-const FEE_WORDS = /\b(charge|charges|fee|fees|excise|commission|tariff)\b/i;
+const FEE_WORDS = /\b(charge|charges)\b/i;
 
 export const isChargeRow = (tx) =>
 	FEE_WORDS.test(tx.details || '') &&
@@ -128,19 +133,15 @@ export function summariseTransactions(transactions = []) {
 	const chargeRows = ordered.filter(isChargeRow);
 	const charges = chargeRows.reduce((sum, tx) => sum + (tx.withdrawn || 0), 0);
 
-	console.log(
-		'[fees]',
-		chargeRows.length,
-		chargeRows.map((tx) => (tx.details.match(FEE_WORDS) || [''])[0]),
-	);
+	// CHANGED: temporary [fees] console.log removed.
 
 	const closing = ordered.length ? ordered[ordered.length - 1].balance || 0 : 0;
 
 	const start = dates.length ? toDateStamp(dates[0]) : null;
 	const end = dates.length ? toDateStamp(dates[dates.length - 1]) : null;
 
-	// CHANGED: fees as a share of actual SPENDING, not of spending-plus-fees.
-	// Dividing by totalOut put the fees inside their own denominator.
+	// Charges as a share of actual SPENDING, not of spending-plus-charges —
+	// dividing by totalOut would put the charges inside their own denominator.
 	const spendExcludingFees = totalOut - charges;
 
 	return {
@@ -156,7 +157,6 @@ export function summariseTransactions(transactions = []) {
 		totalOut,
 		net: totalIn - totalOut,
 		charges,
-		// CHANGED: new — so you can eyeball what got counted as a fee
 		chargeCount: chargeRows.length,
 		chargeShare:
 			spendExcludingFees > 0 ? (charges / spendExcludingFees) * 100 : 0,
